@@ -11,7 +11,12 @@ if(UNIX OR APPLE)
     include_directories(${CURSES_INCLUDE_DIR})
     target_link_libraries(templ PRIVATE ${CURSES_LIBRARIES})
 elseif(WIN32)
-    target_link_libraries(templ PRIVATE pdcurses)
+    include_directories(${CMAKE_SOURCE_DIR}/PDCurses)
+    add_library(pdcurses STATIC IMPORTED)
+    set_target_properties(pdcurses PROPERTIES
+        IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/PDCurses/build/pdcurses.lib
+    )
+    target_link_libraries(templ pdcurses)
 endif()
 
 # Install the executable to bin/
