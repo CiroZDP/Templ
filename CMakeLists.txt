@@ -1,28 +1,32 @@
-# Probably overkill for a simple project, but I'd rather this than a "compile.sh" script :/
 cmake_minimum_required(VERSION 3.10)
 project(templ)
-set(CMAKE_CXX_STANDARD 20)
 
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Find ncurses (terminal UI)
 find_package(Curses REQUIRED)
 include_directories(${CURSES_INCLUDE_DIR})
 
+# Define the executable
 add_executable(templ main.cpp)
-target_link_libraries(templ ${CURSES_LIBRARIES})
 
-# Install the executable
+# Link to curses (note: modern CMake uses target_include_directories/target_link_libraries)
+target_link_libraries(templ PRIVATE ${CURSES_LIBRARIES})
+
+# Install the executable to bin/
 install(TARGETS templ
     RUNTIME DESTINATION bin
 )
 
-# Install templates directory with its contents
+# Install the templates directory recursively
 install(DIRECTORY templates/
     DESTINATION share/templ/templates
-    PATTERN "*"
-    PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ
+    FILE_PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ
 )
 
-# Uninstall templ
+# Define uninstall target
 add_custom_target(uninstall
-    COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_INSTALL_PREFIX}/share/templ
-    COMMAND ${CMAKE_COMMAND} -E remove ${CMAKE_INSTALL_PREFIX}/bin/templ
+    COMMAND ${CMAKE_COMMAND} -E remove_directory "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/share/templ"
+    COMMAND ${CMAKE_COMMAND} -E remove "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/templ"
 )

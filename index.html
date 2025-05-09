@@ -66,14 +66,15 @@
                 <div class="max-w-2xl mx-auto bg-gray-900 rounded-lg p-6">
                     <code class="text-white">
                         <pre>
-# Using npm
-npm install -g templ
+# Build from source
+mkdir build && cd build
+cmake ..
+cmake --build .
+make install
 
-# Using cargo
-cargo install templ
-
-# Using homebrew
-brew install templ</pre>
+# Or install via GitHub releases
+curl -L https://github.com/your-repo/templ/releases/latest/download/templ-x.x.x-linux-x86_64.tar.gz | tar -xz
+</pre>
                     </code>
                 </div>
             </div>
