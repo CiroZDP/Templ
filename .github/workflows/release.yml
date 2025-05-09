@@ -1,9 +1,9 @@
-name: Release
+name: Build and Release Templ
 
 on:
   push:
     tags:
-      - 'v*'
+      - 'v*'   # Triggers on git tag like v1.0.0
 
 jobs:
   build:
@@ -13,26 +13,43 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Set up CMake
         uses: jwlawson/actions-setup-cmake@v1
 
+      - name: Configure
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+
       - name: Build
-        run: |
-          mkdir build
-          cd build
-          cmake ..
-          cmake --build . --config Release
+        run: cmake --build build --config Release
 
-      - name: Archive
-        run: |
-          mkdir dist
-          cp build/mycli dist/
-          tar -czf mycli-${{ runner.os }}.tar.gz -C dist mycli
+      - name: Install
+        run: cmake --install build --prefix dist
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+      - name: Package
+        shell: bash
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          PLATFORM=""
+          EXT="tar.gz"
+
+          if [[ "${{ runner.os }}" == "Windows" ]]; then
+            PLATFORM="Windows"
+            EXT="zip"
+            7z a Templ-${VERSION}-${PLATFORM}.${EXT} ./dist/bin/*
+          elif [[ "${{ runner.os }}" == "macOS" ]]; then
+            PLATFORM="MacOS"
+            tar -czf Templ-${VERSION}-${PLATFORM}.${EXT} -C dist/bin templ
+          else
+            PLATFORM="Linux"
+            tar -czf Templ-${VERSION}-${PLATFORM}.${EXT} -C dist/bin templ
+          fi
+
+      - name: Upload Release Assets
+        uses: softprops/action-gh-release@v1
         with:
-          name: mycli-${{ runner.os }}
-          path: mycli-${{ runner.os }}.tar.gz
+          files: Templ-*.*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
