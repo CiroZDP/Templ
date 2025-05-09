@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="templ - The ultimate CLI tool for creating and managing templates for any project type. Streamline your development workflow with customizable templates for web apps, C++ applications, and more.">
+    <meta name="keywords" content="templ, CLI tool, project templates, development templates, web templates, C++ templates, code scaffolding, developer tools">
+    <meta name="author" content="templ">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="templ - Universal Project Template CLI Tool">
+    <meta property="og:description" content="Create and manage templates for any project type with templ CLI. Boost your development productivity.">
+    <meta property="og:type" content="website">
+    <title>templ - Universal Project Template CLI Tool</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-50">
+    <header class="bg-white shadow-sm fixed w-full z-10">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="text-2xl font-bold text-gray-800">templ</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#features" class="text-gray-600 hover:text-gray-900">Features</a>
+                    <a href="#installation" class="text-gray-600 hover:text-gray-900">Installation</a>
+                    <a href="#documentation" class="text-gray-600 hover:text-gray-900">Docs</a>
+                    <a href="https://github.com/your-repo/templ" class="text-gray-600 hover:text-gray-900">GitHub</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="pt-32 pb-20 bg-gradient-to-b from-white to-gray-100">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-5xl font-bold text-gray-900 mb-6">Create Templates for Anything</h1>
+                <p class="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">templ is a powerful CLI tool that helps you create, manage, and use templates for any type of project. From web applications to C++ programs, streamline your development workflow.</p>
+                <div class="flex justify-center space-x-4">
+                    <a href="#installation" class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition">Get Started</a>
+                    <a href="#documentation" class="bg-gray-200 text-gray-800 px-8 py-3 rounded-lg hover:bg-gray-300 transition">Documentation</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-16">Features</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold mb-4">Universal Templates</h3>
+                        <p class="text-gray-600">Create templates for any project type - web apps, mobile apps, desktop applications, or any other development project.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold mb-4">Easy to Use</h3>
+                        <p class="text-gray-600">Simple CLI interface with intuitive commands. Create and use templates with just a few keystrokes.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold mb-4">Customizable</h3>
+                        <p class="text-gray-600">Define variables and placeholders in your templates for maximum flexibility and reusability.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="installation" class="py-20 bg-gray-100">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-16">Installation</h2>
+                <div class="max-w-2xl mx-auto bg-gray-900 rounded-lg p-6">
+                    <code class="text-white">
+                        <pre>
+# Using npm
+npm install -g templ
+
+# Using cargo
+cargo install templ
+
+# Using homebrew
+brew install templ</pre>
+                    </code>
+                </div>
+            </div>
+        </section>
+
+        <section id="documentation" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-16">Quick Start</h2>
+                <div class="max-w-3xl mx-auto">
+                    <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                        <h3 class="text-xl font-semibold mb-4">Create a Template</h3>
+                        <code class="bg-gray-100 p-4 rounded block">templ create my-template</code>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                        <h3 class="text-xl font-semibold mb-4">Use a Template</h3>
+                        <code class="bg-gray-100 p-4 rounded block">templ use my-template new-project</code>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold mb-4">List Templates</h3>
+                        <code class="bg-gray-100 p-4 rounded block">templ list</code>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <h2 class="text-2xl font-bold">templ</h2>
+                    <p class="text-gray-400">Template CLI for everyone</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="https://github.com/your-repo/templ" class="text-gray-400 hover:text-white">GitHub</a>
+                    <a href="#documentation" class="text-gray-400 hover:text-white">Documentation</a>
+                    <a href="mailto:support@templ.dev" class="text-gray-400 hover:text-white">Support</a>
+                </div>
+            </div>
+            <div class="mt-8 text-center text-gray-400">
+                <p>&copy; 2023 templ. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
