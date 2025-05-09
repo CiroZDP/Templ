@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up CMake
+        uses: jwlawson/actions-setup-cmake@v1
+
+      - name: Build
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          cmake --build . --config Release
+
+      - name: Archive
+        run: |
+          mkdir dist
+          cp build/mycli dist/
+          tar -czf mycli-${{ runner.os }}.tar.gz -C dist mycli
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: mycli-${{ runner.os }}
+          path: mycli-${{ runner.os }}.tar.gz
