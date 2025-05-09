@@ -19,14 +19,13 @@ jobs:
       - name: Set up CMake
         uses: jwlawson/actions-setup-cmake@v1
 
-      - name: Build PDCurses (Windows)
+      - name: Install vcpkg and pdcurses (Windows)
         if: runner.os == 'Windows'
-        shell: bash
         run: |
-          git clone https://github.com/wmcbrine/PDCurses.git
-          cmake -S PDCurses -B PDCurses/build -DCMAKE_BUILD_TYPE=Release -DPDCURSES_BUILD_SHARED=OFF
-          cmake --build PDCurses/build --config Release
-
+          git clone https://github.com/microsoft/vcpkg.git
+          .\vcpkg\bootstrap-vcpkg.bat
+          .\vcpkg\vcpkg install pdcurses:x64-windows
+          
       - name: Configure
         run: cmake -B build -DCMAKE_BUILD_TYPE=Release
 
