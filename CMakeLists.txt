@@ -15,9 +15,6 @@ elseif(WIN32)
     target_link_libraries(templ pdcurses)
 endif()
 
-# Define the executable
-add_executable(templ main.cpp)
-
 # Link to curses (note: modern CMake uses target_include_directories/target_link_libraries)
 target_link_libraries(templ PRIVATE ${CURSES_LIBRARIES})
 
