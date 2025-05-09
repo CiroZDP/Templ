@@ -34,17 +34,27 @@ jobs:
           VERSION=${GITHUB_REF#refs/tags/}
           PLATFORM=""
           EXT="tar.gz"
-
+          
+          # Handle each platform
           if [[ "${{ runner.os }}" == "Windows" ]]; then
             PLATFORM="Windows"
             EXT="zip"
-            7z a Templ-${VERSION}-${PLATFORM}.${EXT} ./dist/bin/*
+            mkdir -p dist/templ
+            cp dist/bin/templ dist/templ/
+            cp -r dist/share/templ dist/templ/templates
+            zip -r Templ-${VERSION}-${PLATFORM}.${EXT} dist/templ
           elif [[ "${{ runner.os }}" == "macOS" ]]; then
             PLATFORM="MacOS"
-            tar -czf Templ-${VERSION}-${PLATFORM}.${EXT} -C dist/bin templ
+            mkdir -p dist/templ
+            cp dist/bin/templ dist/templ/
+            cp -r dist/share/templ dist/templ/templates
+            tar -czf Templ-${VERSION}-${PLATFORM}.${EXT} -C dist templ
           else
             PLATFORM="Linux"
-            tar -czf Templ-${VERSION}-${PLATFORM}.${EXT} -C dist/bin templ
+            mkdir -p dist/templ
+            cp dist/bin/templ dist/templ/
+            cp -r dist/share/templ dist/templ/templates
+            tar -czf Templ-${VERSION}-${PLATFORM}.${EXT} -C dist templ
           fi
 
       - name: Upload Release Assets
