@@ -19,15 +19,31 @@ jobs:
       - name: Set up CMake
         uses: jwlawson/actions-setup-cmake@v1
 
+      - name: Set up PDCurses (Windows)
+        if: runner.os == 'Windows'
+        shell: bash
+        run: |
+          git clone https://github.com/wmcbrine/PDCurses.git
+          cd PDCurses/wincon
+          make -f mingwin32.mak WIDE=Y UTF8=Y DLL=N
+          mkdir -p $GITHUB_WORKSPACE/build/pdcurses
+          cp pdcurses.a $GITHUB_WORKSPACE/build/pdcurses/libpdcurses.a
+          cp ../curses.h ../panel.h ../term.h ../pdcurses.h $GITHUB_WORKSPACE/build/pdcurses/
+
+
       - name: Configure
         run: cmake -B build -DCMAKE_BUILD_TYPE=Release
 
       - name: Configure (macOS)
         if: runner.os == 'macOS'
         run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64"
+
+      - name: Configure (Windows)
+        if: runner.os == 'Windows'
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-static"
       
-      - name: Configure (non-macOS)
-        if: runner.os != 'macOS'
+      - name: Configure (non-macOS, non-Windows)
+        if: ${{ runner.os != 'macOS' && runner.os != 'Windows' }}
         run: cmake -B build -DCMAKE_BUILD_TYPE=Release
       
       - name: Build
