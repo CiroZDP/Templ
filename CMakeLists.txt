@@ -5,8 +5,15 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Find ncurses (terminal UI)
-find_package(Curses REQUIRED)
-include_directories(${CURSES_INCLUDE_DIR})
+add_executable(templ main.cpp)
+
+if(UNIX)
+    find_package(Curses REQUIRED)
+    include_directories(${CURSES_INCLUDE_DIR})
+    target_link_libraries(templ ${CURSES_LIBRARIES})
+elseif(WIN32)
+    target_link_libraries(templ pdcurses)
+endif()
 
 # Define the executable
 add_executable(templ main.cpp)

@@ -32,6 +32,15 @@ templ open <template-name>
 
 # Edit template with built-in editor
 templ edit <template-name>
+
+# List all available templates
+templ list
+
+# Delete a template
+templ delete <template-name>
+
+# List help
+templ help
 ```
 
 ## Available Templates

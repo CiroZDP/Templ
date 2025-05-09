@@ -409,6 +409,18 @@ void listTemplates()
     }
 }
 
+void deleteTemplate(const std::string& templateName) {
+    std::filesystem::path templateDir = std::filesystem::path("../templates") / templateName;
+    
+    if (!std::filesystem::exists(templateDir)) {
+        std::cout << "Template does not exist: " << templateName << std::endl;
+        return;
+    }
+    
+    std::filesystem::remove_all(templateDir);
+    std::cout << "Deleted template: " << templateName << std::endl;
+}
+
 void showUsage() {
     std::cout << "Usage:" << std::endl;
     std::cout << "  templ new <template-name>        Create a new project from a template" << std::endl;
@@ -417,6 +429,8 @@ void showUsage() {
     std::cout << "  templ generate <description>     Generate a template using AI"         << std::endl;
     std::cout << "  templ open <template-name>       Open specific template"               << std::endl;
     std::cout << "  templ edit <template-name>       Edit template with built-in editor"   << std::endl;
+    std::cout << "  templ delete <template-name>     Delete a template"                    << std::endl;
+    std::cout << "  templ help                       Show this help message"               << std::endl;
 }
 
 int main(int argc, char* argv[]) {
@@ -446,6 +460,14 @@ int main(int argc, char* argv[]) {
     else if (command == "list")
     {
         listTemplates();
+    }
+    else if (command == "delete")
+    {
+        deleteTemplate(argument);
+    }
+    else if (command == "help")
+    {
+        showUsage();
     }
     else {
         showUsage();
