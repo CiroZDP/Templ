@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(templ main.cpp)
 
-if(UNIX or APPLE)
+if(UNIX OR APPLE)
     find_package(Curses REQUIRED)
     include_directories(${CURSES_INCLUDE_DIR})
     target_link_libraries(templ PRIVATE ${CURSES_LIBRARIES})
