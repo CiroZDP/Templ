@@ -4,19 +4,15 @@ project(templ)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Find ncurses (terminal UI)
 add_executable(templ main.cpp)
 
-if(UNIX)
+if(UNIX or APPLE)
     find_package(Curses REQUIRED)
     include_directories(${CURSES_INCLUDE_DIR})
-    target_link_libraries(templ ${CURSES_LIBRARIES})
+    target_link_libraries(templ PRIVATE ${CURSES_LIBRARIES})
 elseif(WIN32)
-    target_link_libraries(templ pdcurses)
+    target_link_libraries(templ PRIVATE pdcurses)
 endif()
-
-# Link to curses (note: modern CMake uses target_include_directories/target_link_libraries)
-target_link_libraries(templ PRIVATE ${CURSES_LIBRARIES})
 
 # Install the executable to bin/
 install(TARGETS templ
