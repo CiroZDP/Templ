@@ -26,25 +26,22 @@ jobs:
           git clone https://github.com/microsoft/vcpkg.git
           .\vcpkg\bootstrap-vcpkg.bat
           .\vcpkg\vcpkg install pdcurses:x64-windows
-          
-      - name: Configure
-        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
-
-      - name: Configure (macOS)
-        if: runner.os == 'macOS'
-        run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64"
+          .\vcpkg\vcpkg list  # Verifica que pdcurses esté instalado
 
       - name: Configure (Windows)
         if: runner.os == 'Windows'
         run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=./vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_CXX_FLAGS="-static"
 
+      - name: Configure (macOS)
+        if: runner.os == 'macOS'
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64"
+
       - name: Configure (non-macOS, non-Windows)
         if: ${{ runner.os != 'macOS' && runner.os != 'Windows' }}
-        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
       
       - name: Build
         run: cmake --build build --config Release
-
 
       - name: Install
         run: cmake --install build --prefix dist
@@ -90,4 +87,3 @@ jobs:
           files: Templ-*.*
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-
