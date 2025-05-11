@@ -55,7 +55,7 @@ jobs:
           if [[ "$GITHUB_REF" == refs/tags/* ]]; then
             VERSION="${GITHUB_REF#refs/tags/}"
           else
-            VERSION="${GITHUB_SHA::7}"  # O algún nombre alternativo si no es un tag
+            VERSION="${GITHUB_SHA::7}"
           fi
 
           PLATFORM=""
@@ -84,8 +84,10 @@ jobs:
           fi
 
       - name: Upload Release Assets
+        if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v1
         with:
           files: Templ-*.*
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
