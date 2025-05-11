@@ -36,7 +36,7 @@ jobs:
 
       - name: Configure (Windows)
         if: runner.os == 'Windows'
-        run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=./vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_CXX_FLAGS="-static"
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=./vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_CXX_FLAGS="-static"
 
       - name: Configure (non-macOS, non-Windows)
         if: ${{ runner.os != 'macOS' && runner.os != 'Windows' }}
