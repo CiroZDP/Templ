@@ -11,12 +11,16 @@ if(UNIX OR APPLE)
     include_directories(${CURSES_INCLUDE_DIR})
     target_link_libraries(templ PRIVATE ${CURSES_LIBRARIES})
 elseif(WIN32)
-    include_directories(${CMAKE_SOURCE_DIR}/PDCurses)
-    add_library(pdcurses STATIC IMPORTED)
-    set_target_properties(pdcurses PROPERTIES
-        IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/PDCurses/build/pdcurses.lib
-    )
-    target_link_libraries(templ pdcurses)
+    if(EXISTS "${CMAKE_SOURCE_DIR}/PDCurses/include/curses.h")
+        include_directories(${CMAKE_SOURCE_DIR}/PDCurses/include)
+        add_library(pdcurses STATIC IMPORTED)
+        set_target_properties(pdcurses PROPERTIES
+            IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/PDCurses/build/pdcurses.lib
+        )
+        target_link_libraries(templ pdcurses)
+    else()
+        message(FATAL_ERROR "PDCurses not found. Ensure PDCurses is correctly set up in the project.")
+    endif()
 endif()
 
 # Install the executable to bin/
