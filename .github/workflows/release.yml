@@ -52,7 +52,12 @@ jobs:
       - name: Package
         shell: bash
         run: |
-          VERSION=${GITHUB_REF#refs/tags/}
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            VERSION="${GITHUB_REF#refs/tags/}"
+          else
+            VERSION="${GITHUB_SHA::7}"  # O algún nombre alternativo si no es un tag
+          fi
+
           PLATFORM=""
           EXT="tar.gz"
           
