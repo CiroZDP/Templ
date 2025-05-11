@@ -1,5 +1,9 @@
 #include <iostream>
-#include <ncurses.h>
+#if defined(_WIN32)
+    #include <curses.h>  // PDCurses installs curses.h instead of ncurses
+#else
+    #include <ncurses.h>
+#endif
 #include <string>
 #include <vector>
 #include <filesystem>
